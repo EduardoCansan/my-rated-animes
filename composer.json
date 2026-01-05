@@ -1,0 +1,15 @@
+{
+    "name": "eduardo.cansan/my-rated-animes",
+    "authors": [
+        {
+            "name": "EduardoCansan",
+            "email": "eduardo.cansann@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
