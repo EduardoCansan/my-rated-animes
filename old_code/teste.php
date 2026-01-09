@@ -168,7 +168,7 @@
         </div>
     </div>
     <div class="container">
-        <h1 style="margin-top: 30px;">Top 3 Manga</h1>
+        <h1 style="margin-top: 35px;">Top 3 Manga</h1>
         
         <?php
         // Fetch top anime from Jikan API
@@ -215,7 +215,7 @@
         </div>
     </div>
     <div class="container">
-        <h1 style="margin-top: 30px;">Top 3 People</h1>
+        <h1 style="margin-top: 35px;">Top 3 People</h1>
         
         <?php
         // Fetch top anime from Jikan API
@@ -262,7 +262,7 @@
         </div>
     </div>
     <div class="container">
-        <h1 style="margin-top: 30px;">Top 3 Character</h1>
+        <h1 style="margin-top: 35px;">Top 3 Character</h1>
         
         <?php
         // Fetch top anime from Jikan API
@@ -299,6 +299,159 @@
                         <p class="anime-description">
                             <?php 
                             $synopsis = $anime['about'] ?? 'No description available.';
+                            // Limit description to 200 characters
+                            echo htmlspecialchars(strlen($synopsis) > 200 ? substr($synopsis, 0, 200) . '...' : $synopsis);
+                            ?>
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="container">
+        <h1 style="margin-top: 35px;">Top 3 Season Anime</h1>
+        
+        <?php
+        // Fetch top anime from Jikan API
+        $apiUrl = 'https://api.jikan.moe/v4/seasons/now?limit=3';
+        
+        // Initialize cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        // Execute request
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        
+        curl_close($ch);
+        
+        // Decode JSON response
+        $data = json_decode($response, true);
+        
+        $animeList = $data['data'];
+        ?>
+        
+        <div class="anime-grid">
+            <?php foreach ($animeList as $index => $anime): ?>
+                <div class="anime-card">
+                    <img src="<?php echo htmlspecialchars($anime['images']['jpg']['image_url']); ?>" 
+                         alt="<?php echo htmlspecialchars($anime['title']); ?>" 
+                         class="anime-image">
+                    <div class="anime-content">
+                        <span class="anime-rank">#<?php echo $index + 1; ?></span>
+                        <h2 class="anime-title"><?php echo htmlspecialchars($anime['title']); ?></h2>
+                        <p class="anime-description">
+                            <?php 
+                            $synopsis = $anime['synopsis'] ?? 'No description available.';
+                            // Limit description to 200 characters
+                            echo htmlspecialchars(strlen($synopsis) > 200 ? substr($synopsis, 0, 200) . '...' : $synopsis);
+                            ?>
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+        <div class="container">
+        <h1 style="margin-top: 35px;">Top 3 Naruto</h1>
+        
+        <?php
+        // Fetch top anime from Jikan API
+        $apiUrl = 'https://api.jikan.moe/v4/anime?q=naruto&limit=3';
+        
+        // Initialize cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        // Execute request
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        
+        curl_close($ch);
+        
+        // Decode JSON response
+        $data = json_decode($response, true);
+        
+        $animeList = $data['data'];
+        ?>
+        
+        <div class="anime-grid">
+            <?php foreach ($animeList as $index => $anime): ?>
+                <div class="anime-card">
+                    <img src="<?php echo htmlspecialchars($anime['images']['jpg']['image_url']); ?>" 
+                         alt="<?php echo htmlspecialchars($anime['title']); ?>" 
+                         class="anime-image">
+                    <div class="anime-content">
+                        <span class="anime-rank">#<?php echo $index + 1; ?></span>
+                        <h2 class="anime-title"><?php echo htmlspecialchars($anime['title']); ?></h2>
+                        <p class="anime-description">
+                            <?php 
+                            $synopsis = $anime['synopsis'] ?? 'No description available.';
+                            // Limit description to 200 characters
+                            echo htmlspecialchars(strlen($synopsis) > 200 ? substr($synopsis, 0, 200) . '...' : $synopsis);
+                            ?>
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="container">
+        <h1 style="margin-top: 35px;">Top 3 Random Anime</h1>
+        
+        <?php
+        // Fetch 3 random anime from Jikan API
+        $animeList = [];
+        
+        // Make 3 separate API calls to get 3 random anime
+        for ($i = 0; $i < 3; $i++) {
+            $apiUrl = 'https://api.jikan.moe/v4/random/anime?genres=27&limit=3';
+
+            // Initialize cURL
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $apiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            
+            // Execute request
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            
+            curl_close($ch);
+            
+            // Decode JSON response
+            $data = json_decode($response, true);
+            
+            // Add the random anime to our list
+            $animeList[] = $data['data'];
+            
+            // !!!!! IMPORTANT !!!!!
+            // Sleep for 1 second to respect API rate limits (60 requests per minute)
+            if ($i < 2) { // Don't sleep after the last request
+                sleep(1);
+            }
+        }
+        ?>
+        
+        <div class="anime-grid">
+            <?php foreach ($animeList as $index => $anime): ?>
+                <div class="anime-card">
+                    <img src="<?php echo htmlspecialchars($anime['images']['jpg']['large_image_url']); ?>" 
+                         alt="<?php echo htmlspecialchars($anime['title']); ?>" 
+                         class="anime-image">
+                    <div class="anime-content">
+                        <span class="anime-rank">#<?php echo $index + 1; ?></span>
+                        <h2 class="anime-title"><?php echo htmlspecialchars($anime['title']); ?></h2>
+                        <p class="anime-description">
+                            <?php 
+                            $synopsis = $anime['synopsis'] ?? 'No description available.';
                             // Limit description to 200 characters
                             echo htmlspecialchars(strlen($synopsis) > 200 ? substr($synopsis, 0, 200) . '...' : $synopsis);
                             ?>
