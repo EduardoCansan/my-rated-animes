@@ -41,7 +41,8 @@ class Router
         }
 
         if (is_array($callback)) {
-            $callback[0] = new $callback[0]();
+            Application::$app->setController(new $callback[0]());
+            $callback[0] = Application::$app->getController();
         }
 
         return call_user_func($callback, $this->request);
@@ -66,8 +67,9 @@ class Router
     // render layout, after will be excluded
     protected function layoutContent()
     {
+        $layout = Application::$app->getController()->layout;
         ob_start();
-        include_once Application::$ROOT_DIR . "/views/layouts/main.php";
+        include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
         return ob_get_clean();
     }
 

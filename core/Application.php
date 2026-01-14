@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\Controller;
+
 class Application
 {
     public static string $ROOT_DIR;
@@ -9,6 +11,7 @@ class Application
     public Request $request;
     public Response $response;
     public static Application $app;
+    public ?Controller $controller = null; // Make it nullable with default null
 
     public function __construct($rootPath)
     {
@@ -18,6 +21,16 @@ class Application
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
     }
+
+    public function getController(): ?Controller
+    {
+        return $this->controller;
+    }
+
+    public function setController(Controller $controller): void
+    {
+        $this->controller = $controller;
+    } 
 
     public function run()
     {
