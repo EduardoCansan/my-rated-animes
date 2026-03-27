@@ -19,7 +19,7 @@ class Request
         
         // Remove trailing slash from scriptName if present (for root path)
         if ($scriptName !== '/' && strlen($scriptName) > 1 && strpos($path, $scriptName) === 0) {
-           $path = substr($path, strlen($scriptName));
+            $path = substr($path, strlen($scriptName));
         }
         
         if ($path === '') {

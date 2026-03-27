@@ -16,10 +16,6 @@
     </div>
   </div>
   <div class="form-group">
-    <label>Lastname</label>
-    <input type="text" class="form-control" name="lastname">
-  </div>
-  <div class="form-group">
     <label>Email</label>
     <input type="email" class="form-control" name="email">
   </div>
