@@ -35,6 +35,18 @@ abstract class Model
                 if($ruleName === self::RULE_REQUIRED && (empty($value) || !$value)) {
                     $this->addError($attribute, self::RULE_REQUIRED);
                 }
+                if($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                    $this->addError($attribute, self::RULE_EMAIL);
+                }
+                if ($ruleName === self::RULE_MIN && strlen($value) < $rule['min']) {
+                    $this->addError($attribute, self::RULE_MIN, $rule);
+                }
+                if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
+                    $this->addError($attribute, self::RULE_MAX, $rule);
+                }
+                if ($ruleName === self::RULE_MATCH && $value !== $this->{rule['match']}) {
+                    $this->addError($attribute, self::RULE_MATCH);
+                }
             }
         }
 
@@ -51,10 +63,10 @@ abstract class Model
     {
         return [
             self::RULE_REQUIRED => 'This field is required',
-            self::RULE_EMAIL => 'Email is not valid',
-            self::RULE_MIN => 'Min length is ' . $this->min,
-            self::RULE_MAX => 'Max length is ' . $this->max,
-            self::RULE_MATCH => 'Passwords do not match', $this->match
+            self::RULE_EMAIL => 'This field must be valid email address',
+            self::RULE_MIN => 'Min length length of this field must be {min}',
+            self::RULE_MAX => 'Max length length of this field must be {max}',
+            self::RULE_MATCH => 'This field must be the same as {match}'
         ];
     }
 }
